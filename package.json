@@ -1,0 +1,12 @@
+{
+  "name": "otus-js-hw07-weather",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Anatoly",
+  "license": "ISC",
+  "description": "Get weather data for cities"
+}
