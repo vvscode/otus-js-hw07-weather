@@ -28,7 +28,3 @@ document.querySelector(".app").innerHTML = `
         </ul>
       </span>
 `;
-
-export function sum(a, b) {
-  return a + b;
-}
