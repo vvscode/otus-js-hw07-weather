@@ -1,4 +1,4 @@
-import { sum } from ".";
+import { sum } from "./sum";
 
 describe("test function", () => {
   it("returns sum of a and b", () => {
