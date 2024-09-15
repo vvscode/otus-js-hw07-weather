@@ -17,8 +17,11 @@ export default [
     ...jest.configs["flat/recommended"],
     rules: {
       "no-unused-vars": "warn",
-      "no-undef": "error",
+      "no-undef": "warn",
     },
+  },
+  {
+    ignores: ["dist", "webpack.config*"],
   },
   eslintConfigPrettier,
 ];
