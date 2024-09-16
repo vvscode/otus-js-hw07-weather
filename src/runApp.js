@@ -1,3 +1,5 @@
+import mapImg from "./map.png";
+
 /**
  * Запуск приложения
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
@@ -17,7 +19,7 @@ export default function runApp(el) {
         </div>
         <div>
           <span>
-            <img class="city-map" src="map.png" />
+            <img class="city-map" src="${mapImg}" />
           </span>
           <span>
             <textarea class="weather-info">Weather info</textarea>
