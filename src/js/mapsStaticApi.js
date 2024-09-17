@@ -1,9 +1,10 @@
 import { fetchJson } from "./fetchUrl";
+import stubMapSrc from "../map.png";
 
 const baseUrl = "https://maps.googleapis.com/maps/api/staticmap";
 const apiKey = "";
 
-let src;
+let mapSrc;
 
 /**
  * Запрашивает тайл по координатам места
@@ -16,7 +17,11 @@ export async function fetchMapImageByCoords(
   zoom = 12,
   size = 400
 ) {
-  const url = `${baseUrl}?center=${latitude},${longitude}&zoom=${zoom}&size=${size}x${size}&key=${apiKey}`;
-  src = await fetchJson(url);
-  return src;
+  if (latitude && longitude && apiKey) {
+    const url = `${baseUrl}?center=${latitude},${longitude}&zoom=${zoom}&size=${size}x${size}&key=${apiKey}`;
+    mapSrc = await fetchJson(url);
+  } else {
+    mapSrc = stubMapSrc;
+  }
+  return mapSrc;
 }

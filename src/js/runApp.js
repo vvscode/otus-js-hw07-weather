@@ -1,5 +1,5 @@
-import mapImg from "../map.png";
 import { fetchCoords } from "./geolocation";
+import { fetchMapImageByCoords } from "./mapsStaticApi";
 import {
   fetchCurrentWeatherByCoords,
   fetchCurrentWeatherByCityName,
@@ -11,13 +11,11 @@ import {
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
  */
 export default async function runApp(el) {
-  fillElements(el);
-
   const coords = await fetchCoords();
-  if (!coords) {
-    console.log("Не получены координаты");
-    return;
-  }
+
+  const mapSrc = await fetchMapImageByCoords(...coords);
+
+  fillElements(el, mapSrc);
 
   const weather = await fetchCurrentWeatherByCoords(...coords);
   if (!weather) {
@@ -33,7 +31,7 @@ export default async function runApp(el) {
  *
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
  */
-function fillElements(el) {
+function fillElements(el, mapSrc) {
   el.innerHTML = `
   <span>
     <div class="panel-search">
@@ -48,7 +46,7 @@ function fillElements(el) {
     </div>
     <div>
       <span>
-        <img class="city-map" src="${mapImg}" />
+        <img class="city-map" src="${mapSrc}" />
       </span>
       <span>
         <textarea class="weather-info">Weather info</textarea>
