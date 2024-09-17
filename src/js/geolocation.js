@@ -1,4 +1,4 @@
-let coords;
+let coords = undefined;
 
 const options = {
   enableHighAccuracy: true,

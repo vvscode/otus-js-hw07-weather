@@ -1,4 +1,10 @@
 import mapImg from "../map.png";
+import { fetchCoords } from "./geolocation";
+import {
+  fetchCurrentWeatherByCoords,
+  fetchCurrentWeatherByCityName,
+  getTemperature,
+} from "./weatherApi";
 
 /**
  * Запуск приложения
@@ -6,6 +12,21 @@ import mapImg from "../map.png";
  */
 export default async function runApp(el) {
   fillElements(el);
+
+  const coords = await fetchCoords();
+  if (!coords) {
+    console.log("Не получены координаты");
+    return;
+  }
+
+  const weather = await fetchCurrentWeatherByCoords(...coords);
+  if (!weather) {
+    console.log("Данные о погоде не получены");
+    return;
+  }
+
+  console.log("Температура: " + getTemperature());
+  // console.log(weather);
 }
 
 /**
