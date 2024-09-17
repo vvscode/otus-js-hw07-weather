@@ -13,7 +13,7 @@ const options = {
 export async function fetchCoords() {
   if (navigator.geolocation) {
     const promise = new Promise((resolve, reject) =>
-      navigator.geolocation.getCurrentPosition(resolve, reject)
+      navigator.geolocation.getCurrentPosition(resolve, reject, options)
     );
 
     const nav = await promise;
@@ -22,6 +22,10 @@ export async function fetchCoords() {
   return coords;
 }
 
+/**
+ * Проверка наличия и корректности координат
+ * @returns True в случае корректных координат
+ */
 export function hasCoords() {
-  return coords.every(Number.isFinite);
+  return coords && coords.length && coords.every(Number.isFinite);
 }
