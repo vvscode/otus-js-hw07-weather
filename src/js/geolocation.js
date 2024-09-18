@@ -17,7 +17,7 @@ export async function fetchCoords() {
     );
 
     const nav = await promise;
-    coords = [nav.coords.latitude, nav.coords.longitude];
+    coords = [nav.coords.longitude, nav.coords.latitude];
   }
   return coords;
 }
