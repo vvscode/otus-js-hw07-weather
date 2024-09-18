@@ -43,7 +43,7 @@ function fillMarkUp(el) {
     />
     <button class="${CLASS_SEARCH_BUTTON}">Show</button>
     <label class="history-label">HISTORY</label>
-    <img class="weather-location" src="map.png" alt="current location" />
+    <img class="weather-location" src="./images/map.png" alt="current location" />
     <textarea
       class="${CLASS_WEATHER_INFO}"
       placeholder="Weather info"
