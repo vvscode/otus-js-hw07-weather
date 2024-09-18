@@ -1,33 +1,35 @@
-.app {
+.body {
   font-family: sans-serif;
+  font-style: normal;
+  font-weight: 400;
   margin: 30px;
 }
 
-.input-search {
-  width: 265px;
+.app {
+  display: grid;
+  grid-template-columns: 25em 8em 8em;
+  gap: 15px;
 }
 
-.btn-search {
-  margin-left: 10px;
-  width: 120px;
-}
-
-.panel-search {
-  margin-left: 10px;
-}
-
-.city-map {
-  height: 250px;
+.weather-location {
+  justify-self: center;
 }
 
 .weather-info {
-  vertical-align: top;
-  height: 225px;
-  width: 115px;
-  margin-top: 10px;
+  padding: 15px 5px;
+  resize: none;
 }
 
 .history-label {
-  margin-left: 30px;
-  border-bottom-style: solid;
+  text-decoration: underline;
+  justify-self: center;
+}
+
+.history-list li {
+  list-style: none;
+  line-height: 2em;
+}
+
+.history-list a {
+  text-decoration: none;
 }

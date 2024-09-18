@@ -24,7 +24,6 @@ export default async function runApp(el) {
   }
 
   console.log("Температура: " + getTemperature());
-  // console.log(weather);
 }
 
 /**
@@ -33,33 +32,25 @@ export default async function runApp(el) {
  */
 function fillElements(el, mapSrc) {
   el.innerHTML = `
-  <span>
-    <div class="panel-search">
-      <input
-        class="input-search"
-        type="search"
-        inputmode="latin"
-        required
-        placeholder="Moscow"
-      />
-      <button class="btn-search">Show</button>
-    </div>
-    <div>
-      <span>
-        <img class="city-map" src="${mapSrc}" />
-      </span>
-      <span>
-        <textarea class="weather-info">Weather info</textarea>
-      </span>
-    </div>
-  </span>
-  <span class="sidebar">
+    <input
+      class="search-input"
+      type="search"
+      inputmode="latin"
+      required
+      placeholder="Moscow"
+    />
+    <button class="search-btn">Show</button>
     <label class="history-label">HISTORY</label>
-    <ul class="search-history">
-      <li>Moscow</li>
-      <li>Minsk</li>
-      <li>London</li>
+    <img class="weather-location" src="${mapSrc}" />
+    <textarea
+      class="weather-info"
+      placeholder="Weather info"
+      readonly
+    ></textarea>
+    <ul class="history-list">
+      <li><a href="#">Moscow</a></li>
+      <li><a href="#">Minsk</a></li>
+      <li><a href="#">London</a></li>
     </ul>
-  </span>
   `;
 }
