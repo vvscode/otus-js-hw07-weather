@@ -69,11 +69,13 @@ function addListeners(el) {
   historyList = el.querySelector("." + CLASS_HISTORY_LIST);
 
   searchButton.addEventListener("click", async (ev) => {
-    const city = searchInput.value.trim();
+    const city = searchInput.value.trim().replace(/-+/, " ");
     if (!city) {
       alert("Необходимо ввести город на английском языке");
       return;
     }
+
+    if (searchInput.value != city) searchInput.value = city;
     const weather = await fetchCurrentWeatherByCityName(city);
     await showCurrentWeather(weather);
     // ev.target.hidden = true;
