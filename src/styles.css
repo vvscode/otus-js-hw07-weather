@@ -7,7 +7,7 @@
 
 .app {
   display: grid;
-  grid-template-columns: 25em 8em 8em;
+  grid-template-columns: 25em 10em 8em;
   gap: 15px;
 }
 
