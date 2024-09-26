@@ -17,15 +17,15 @@ const CLASS_HISTORY_CITY = "history-city";
 
 export const HISTORY_LIMIT = 10;
 
-let rootElement;
-let searchInput, searchButton, weatherLocation, weatherInfo, historyCityList;
+let root;
+let searchInput, searchButton, weatherLocation, weatherInfo, cityList;
 
 /**
  * Запуск приложения
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
  */
 export default async function runApp(el) {
-  rootElement = el;
+  root = el;
 
   fillMarkUp(el);
   addListeners(el);
@@ -71,7 +71,7 @@ function addListeners(el) {
   searchButton = el.querySelector("." + CLASS_SEARCH_BUTTON);
   weatherLocation = el.querySelector("." + CLASS_WEATHER_LOCATION);
   weatherInfo = el.querySelector("." + CLASS_WEATHER_INFO);
-  historyCityList = el.querySelector("." + CLASS_HISTORY_LIST);
+  cityList = el.querySelector("." + CLASS_HISTORY_LIST);
 
   searchButton.addEventListener("click", (ev) => {
     const cityName = searchInput.value.trim().replace(/-+/, " ");
@@ -126,12 +126,8 @@ async function showCurrentWeather(weather) {
  */
 export function addCityToHistory(cityName) {
   const cityClass = `${cityName}`.replace(/\W+/, "-").toLowerCase();
-  let cityElement = rootElement.querySelector(
-    `.${CLASS_HISTORY_LIST} .${cityClass}`
-  );
+  let cityElement = root.querySelector(`.${CLASS_HISTORY_LIST} .${cityClass}`);
   if (cityElement) {
-    console.log(cityElement);
-    console.log("removing element");
     cityElement.remove();
   } else {
     cityElement = document.createElement("li");
@@ -139,11 +135,10 @@ export function addCityToHistory(cityName) {
     cityElement.addEventListener("click", () => getWeather(cityName));
   }
 
-  historyCityList.appendChild(cityElement);
+  cityList.append(cityElement);
 
-  let historyCityElements =
-    historyCityList.getElementsByClassName(CLASS_HISTORY_CITY);
-  if (historyCityElements.length > HISTORY_LIMIT) {
-    historyCityElements[0].remove();
+  let cityElements = cityList.getElementsByClassName(CLASS_HISTORY_CITY);
+  if (cityElements.length > HISTORY_LIMIT) {
+    cityElements[0].remove();
   }
 }
