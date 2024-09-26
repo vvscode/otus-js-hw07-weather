@@ -128,12 +128,12 @@ export function addCityToHistory(cityName) {
   const cityClass = `${cityName}`.replace(/\W+/, "-").toLowerCase();
   let cityElement = root.querySelector(`.${CLASS_HISTORY_LIST} .${cityClass}`);
   if (cityElement) {
-    cityElement.remove();
-  } else {
-    cityElement = document.createElement("li");
-    cityElement.innerHTML = `<a class="${CLASS_HISTORY_CITY} ${cityClass}" href="#">${cityName}</a>`;
-    cityElement.addEventListener("click", () => getWeather(cityName));
+    cityElement.closest("li").remove();
   }
+
+  cityElement = document.createElement("li");
+  cityElement.innerHTML = `<a class="${CLASS_HISTORY_CITY} ${cityClass}" href="#">${cityName}</a>`;
+  cityElement.addEventListener("click", () => getWeather(cityName));
 
   cityList.append(cityElement);
 
