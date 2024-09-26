@@ -23,7 +23,7 @@ export function restoreHistoryFromStorage(callback) {
 
 /**
  * Сохранение города в локальном хранилище
- * @param {string} cityName
+ * @param {string} cityName - название города
  */
 export function saveHistoryToStorage(cityName) {
   if (storageCityNames.includes(cityName)) {

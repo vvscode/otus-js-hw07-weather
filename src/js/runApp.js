@@ -1,6 +1,6 @@
 import { fetchCoords } from "./geolocation";
 import { fetchMapImageByCoords } from "./mapsStaticApi";
-import { restoreHistoryFromStorage, saveHistoryToStorage } from "./storage";
+import { restoreHistoryFromStorage, saveHistoryToStorage } from "./cityStorage";
 import {
   fetchCurrentWeatherByCoords,
   fetchCurrentWeatherByCityName,

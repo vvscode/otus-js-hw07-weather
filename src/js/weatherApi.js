@@ -4,6 +4,7 @@ const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 const apiKey = "3df013696c7d14e7d1aeff2b540ad15b";
 
 let _weather;
+let _url;
 
 /**
  * Запрашивает объект с данными о текущей погоде по координатам места
@@ -11,8 +12,8 @@ let _weather;
  * @param {number} longitude - долгота места в градусах
  */
 export async function fetchCurrentWeatherByCoords(latitude, longitude) {
-  const url = `${baseUrl}?units=metric&lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
-  _weather = await fetchJson(url);
+  _url = `${baseUrl}?units=metric&lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+  _weather = await fetchJson(_url);
   return _weather;
 }
 
@@ -21,8 +22,8 @@ export async function fetchCurrentWeatherByCoords(latitude, longitude) {
  * @param {string} cityName - город
  */
 export async function fetchCurrentWeatherByCityName(cityName) {
-  const url = `${baseUrl}?units=metric&q=${cityName}&appid=${apiKey}`;
-  _weather = await fetchJson(url);
+  _url = `${baseUrl}?units=metric&q=${cityName}&appid=${apiKey}`;
+  _weather = await fetchJson(_url);
   return _weather;
 }
 
@@ -36,7 +37,7 @@ export function getTemperature(weather = _weather) {
 }
 
 /**
- * Вовзаращет координаты места из объекта запрошенной погоды
+ * Возвращает координаты места из объекта запрошенной погоды
  * @param {object} weather - Объект запрошенной погоды
  * @returns {Array.<number>} - Массив [широта, долгота] в градусах
  */

@@ -14,7 +14,7 @@ export async function fetchJson(
     options.signal = AbortSignal.timeout(timeoutMsecs);
     const result = await fetch(url, options);
     if (result.ok) {
-      return await result.json();
+      return result.json();
     }
   } catch (e) {
     console.log(e);

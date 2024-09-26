@@ -1,4 +1,4 @@
-import mapImg from "../map.png";
+import mapImg from "../images/map.png";
 
 const baseUrl = "https:/static-maps.yandex.ru/v1";
 const apiKey = "";
