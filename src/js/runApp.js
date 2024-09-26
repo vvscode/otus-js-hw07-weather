@@ -1,5 +1,6 @@
 import { fetchCoords } from "./geolocation";
 import { fetchMapImageByCoords } from "./mapsStaticApi";
+import { restoreHistoryFromStorage, saveHistoryToStorage } from "./storage";
 import {
   fetchCurrentWeatherByCoords,
   fetchCurrentWeatherByCityName,
@@ -14,7 +15,7 @@ const CLASS_WEATHER_INFO = "weather-info";
 const CLASS_HISTORY_LIST = "history-list";
 const CLASS_HISTORY_CITY = "history-city";
 
-const HISTORY_LIMIT = 10;
+export const HISTORY_LIMIT = 10;
 
 let rootElement;
 let searchInput, searchButton, weatherLocation, weatherInfo, historyCityList;
@@ -25,9 +26,10 @@ let searchInput, searchButton, weatherLocation, weatherInfo, historyCityList;
  */
 export default async function runApp(el) {
   rootElement = el;
+
   fillMarkUp(el);
   addListeners(el);
-  restoreHistoryFromStorage();
+  restoreHistoryFromStorage(addCityToHistory);
 
   const coords = await fetchCoords();
   const weather = await fetchCurrentWeatherByCoords(...coords);
@@ -91,7 +93,7 @@ function addListeners(el) {
 
 /**
  * Запрос погоды и отображение результатов
- * @param {string} cityName
+ * @param {string} cityName - Название города
  */
 async function getWeather(cityName) {
   console.log("send fetch for ", cityName);
@@ -99,6 +101,7 @@ async function getWeather(cityName) {
   if (weather) {
     await showCurrentWeather(weather);
     addCityToHistory(cityName);
+    saveHistoryToStorage(cityName);
   }
 }
 
@@ -120,9 +123,8 @@ async function showCurrentWeather(weather) {
 /**
  * Обновление истории поисков
  * @param {string} cityName - Название города
- * @param {boolean} initial - Первоначальная загрузка из хранилища
  */
-function addCityToHistory(cityName, initial) {
+export function addCityToHistory(cityName) {
   const cityClass = `${cityName}`.replace(/\W+/, "-").toLowerCase();
   let cityElement = rootElement.querySelector(
     `.${CLASS_HISTORY_LIST} .${cityClass}`
