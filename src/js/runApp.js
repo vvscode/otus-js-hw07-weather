@@ -12,16 +12,22 @@ const CLASS_SEARCH_BUTTON = "search-btn";
 const CLASS_WEATHER_LOCATION = "weather-location";
 const CLASS_WEATHER_INFO = "weather-info";
 const CLASS_HISTORY_LIST = "history-list";
+const CLASS_HISTORY_CITY = "history-city";
 
-let searchInput, searchButton, weatherLocation, weatherInfo, historyList;
+const HISTORY_LIMIT = 10;
+
+let rootElement;
+let searchInput, searchButton, weatherLocation, weatherInfo, historyCityList;
 
 /**
  * Запуск приложения
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
  */
 export default async function runApp(el) {
+  rootElement = el;
   fillMarkUp(el);
   addListeners(el);
+  restoreHistoryFromStorage();
 
   const coords = await fetchCoords();
   const weather = await fetchCurrentWeatherByCoords(...coords);
@@ -49,13 +55,10 @@ function fillMarkUp(el) {
       placeholder="Weather info"
       readonly
     ></textarea>
-    <ul class="${CLASS_HISTORY_LIST}">
-      <li><a href="#">Moscow</a></li>
-      <li><a href="#">Minsk</a></li>
-      <li><a href="#">London</a></li>
-    </ul>
+    <ul class="${CLASS_HISTORY_LIST}"></ul>
   `;
 }
+//<li><a class="history-city" href="javastript:fetchCurrentWeatherByCityName('London')">London</a></li>
 
 /**
  * Подписка элементов на события
@@ -66,20 +69,37 @@ function addListeners(el) {
   searchButton = el.querySelector("." + CLASS_SEARCH_BUTTON);
   weatherLocation = el.querySelector("." + CLASS_WEATHER_LOCATION);
   weatherInfo = el.querySelector("." + CLASS_WEATHER_INFO);
-  historyList = el.querySelector("." + CLASS_HISTORY_LIST);
+  historyCityList = el.querySelector("." + CLASS_HISTORY_LIST);
 
-  searchButton.addEventListener("click", async (ev) => {
-    const city = searchInput.value.trim().replace(/-+/, " ");
-    if (!city) {
+  searchButton.addEventListener("click", (ev) => {
+    const cityName = searchInput.value.trim().replace(/-+/, " ");
+    if (!cityName) {
       alert("Необходимо ввести город на английском языке");
       return;
     }
 
-    if (searchInput.value != city) searchInput.value = city;
-    const weather = await fetchCurrentWeatherByCityName(city);
-    await showCurrentWeather(weather);
-    // ev.target.hidden = true;
+    weatherInfo.value = "";
+    try {
+      ev.target.disabled = true;
+      if (searchInput.value != cityName) searchInput.value = cityName;
+      getWeather(cityName);
+    } finally {
+      ev.target.disabled = false;
+    }
   });
+}
+
+/**
+ * Запрос погоды и отображение результатов
+ * @param {string} cityName
+ */
+async function getWeather(cityName) {
+  console.log("send fetch for ", cityName);
+  const weather = await fetchCurrentWeatherByCityName(cityName);
+  if (weather) {
+    await showCurrentWeather(weather);
+    addCityToHistory(cityName);
+  }
 }
 
 /**
@@ -91,9 +111,37 @@ async function showCurrentWeather(weather) {
     weatherInfo.value = "Данные не получены\nСервер не отвечает";
     return;
   }
-  // console.log(weather);
   weatherInfo.value = "Температура: " + getTemperature();
 
   const mapSrc = await fetchMapImageByCoords(...getCoordinates(weather));
   weatherLocation.src = mapSrc;
+}
+
+/**
+ * Обновление истории поисков
+ * @param {string} cityName - Название города
+ * @param {boolean} initial - Первоначальная загрузка из хранилища
+ */
+function addCityToHistory(cityName, initial) {
+  const cityClass = `${cityName}`.replace(/\W+/, "-").toLowerCase();
+  let cityElement = rootElement.querySelector(
+    `.${CLASS_HISTORY_LIST} .${cityClass}`
+  );
+  if (cityElement) {
+    console.log(cityElement);
+    console.log("removing element");
+    cityElement.remove();
+  } else {
+    cityElement = document.createElement("li");
+    cityElement.innerHTML = `<a class="${CLASS_HISTORY_CITY} ${cityClass}" href="#">${cityName}</a>`;
+    cityElement.addEventListener("click", () => getWeather(cityName));
+  }
+
+  historyCityList.appendChild(cityElement);
+
+  let historyCityElements =
+    historyCityList.getElementsByClassName(CLASS_HISTORY_CITY);
+  if (historyCityElements.length > HISTORY_LIMIT) {
+    historyCityElements[0].remove();
+  }
 }
