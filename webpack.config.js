@@ -19,8 +19,12 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.png/,
+        test: /\.png$/i,
         type: "asset/resource",
+        // loader: "file-loader",
+        // options: {
+        //   name: "/public/images/[name].[ext]",
+        // },
       },
     ],
   },
