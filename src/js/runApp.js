@@ -1,6 +1,6 @@
 import { fetchCoords } from "./geolocation";
 import { fetchMapImageByCoords } from "./mapsStaticApi";
-import { restoreHistoryFromStorage, saveHistoryToStorage } from "./cityStorage";
+import { CityStorage } from "./cityStorage";
 import {
   fetchCurrentWeatherByCoords,
   fetchCurrentWeatherByCityName,
@@ -20,16 +20,20 @@ export const HISTORY_LIMIT = 10;
 let root;
 let searchInput, searchButton, weatherLocation, weatherInfo, cityList;
 
+let cityStorage;
+
 /**
  * Запуск приложения
  * @param {Element} el - Корневой элемент в теле разметки главной страницы
  */
 export default async function runApp(el) {
   root = el;
+  cityStorage = new CityStorage(HISTORY_LIMIT);
 
   fillMarkUp(el);
   addListeners(el);
-  restoreHistoryFromStorage(addCityToHistory);
+
+  cityStorage.restoreHistory(addCityToHistory);
 
   const coords = await fetchCoords();
   const weather = await fetchCurrentWeatherByCoords(...coords);
@@ -101,7 +105,7 @@ async function getWeather(cityName) {
   if (weather) {
     await showCurrentWeather(weather);
     addCityToHistory(cityName);
-    saveHistoryToStorage(cityName);
+    cityStorage.saveHistory(cityName);
   }
 }
 
