@@ -1,6 +1,6 @@
+import CityStorage from "./cityStorage";
 import { fetchCoords } from "./geolocation";
 import { fetchMapImageByCoords } from "./mapsStaticApi";
-import { CityStorage } from "./cityStorage";
 import {
   fetchCurrentWeatherByCoords,
   fetchCurrentWeatherByCityName,
@@ -28,11 +28,11 @@ let cityStorage;
  */
 export default async function runApp(el) {
   root = el;
-  cityStorage = new CityStorage(HISTORY_LIMIT);
 
   fillMarkUp(el);
   addListeners(el);
 
+  cityStorage = new CityStorage(HISTORY_LIMIT);
   cityStorage.restoreHistory(addCityToHistory);
 
   const coords = await fetchCoords();

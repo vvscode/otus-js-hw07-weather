@@ -1,15 +1,21 @@
-const HISTORY_STORAGE_KEY = "history";
+export const HISTORY_STORAGE_KEY = "history";
+export const HISTORY_LIMIT_DEFAULT = 10;
+export const HISTORY_LIMIT_MIN = 3;
 
 /**
  * Хранилище истории просмотренных городов
  */
-export class CityStorage {
+export default class CityStorage {
   /**
    *
    * @param {number} historyLimit - Максимальное количество записей в хранилище
    */
-  constructor(historyLimit = 10) {
-    this.historyLimit = historyLimit;
+  constructor(historyLimit = HISTORY_LIMIT_DEFAULT) {
+    if (historyLimit < HISTORY_LIMIT_MIN) {
+      this.historyLimit = HISTORY_LIMIT_DEFAULT;
+    } else {
+      this.historyLimit = historyLimit;
+    }
     this.storageCityNames = [];
   }
 
@@ -27,7 +33,10 @@ export class CityStorage {
   restoreHistory(callback) {
     this.storageCityNames =
       JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY)) ?? [];
-    this.storageCityNames.forEach(callback);
+    if (callback) {
+      this.storageCityNames.forEach(callback);
+    }
+    return this.storageCityNames;
   }
 
   /**
@@ -41,13 +50,13 @@ export class CityStorage {
       this.storageCityNames.push(cityName);
     } else {
       this.storageCityNames.push(cityName);
-      if (this.storageCityNames.length > HISTORY_LIMIT) {
+      if (this.storageCityNames.length > this.historyLimit) {
         this.storageCityNames = this.storageCityNames.slice(1);
       }
-      localStorage.setItem(
-        HISTORY_STORAGE_KEY,
-        JSON.stringify(this.storageCityNames)
-      );
     }
+    localStorage.setItem(
+      HISTORY_STORAGE_KEY,
+      JSON.stringify(this.storageCityNames)
+    );
   }
 }
