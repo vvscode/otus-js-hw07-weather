@@ -120,7 +120,7 @@ async function showCurrentWeather(weather) {
   }
   weatherInfo.value = "Температура: " + getTemperature();
 
-  const mapSrc = await fetchMapImageByCoords(...getCoordinates(weather));
+  const mapSrc = fetchMapImageByCoords(...getCoordinates(weather));
   weatherLocation.src = mapSrc;
 }
 

@@ -1,6 +1,7 @@
-import mapImg from "../images/map.png";
+// import mapImg from "../images/map.png";
+export const mapImg = "../images/map.png";
 
-const baseUrl = "https:/static-maps.yandex.ru/v1";
+export const baseUrl = "https:/static-maps.yandex.ru/v1";
 const apiKey = "";
 
 let src;
@@ -9,8 +10,9 @@ let src;
  * Запрашивает тайл по координатам места
  * @param {number} latitude - широта места
  * @param {number} longitude - долгота места
+ * @returns {string}
  */
-export async function fetchMapImageByCoords(
+export function fetchMapImageByCoords(
   latitude,
   longitude,
   zoom = 12,
