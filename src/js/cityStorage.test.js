@@ -49,7 +49,7 @@ describe("CityStorage", () => {
   });
 
   it("run callback once if first city added", () => {
-    const callback = jest.fn((name) => console.log(name));
+    const callback = jest.fn((name) => {});
     cityStorage.saveHistory("Vologda");
     expect(callback).toHaveBeenCalledTimes(0);
 
@@ -58,7 +58,7 @@ describe("CityStorage", () => {
   });
 
   it("run callback twice if 2 cities added", () => {
-    const callback = jest.fn((name) => console.log(name));
+    const callback = jest.fn((name) => {});
     cityStorage.saveHistory("Saint-Petersburg");
     cityStorage.saveHistory("Kaliningrad");
     expect(callback).toHaveBeenCalledTimes(0);
