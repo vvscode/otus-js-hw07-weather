@@ -24,8 +24,15 @@ export async function fetchCoords() {
 
 /**
  * Проверка наличия и корректности координат
- * @returns True в случае корректных координат
+ * @returns {boolean} True в случае корректных координат
  */
 export function hasCoords() {
   return coords && coords.length && coords.every(Number.isFinite);
+}
+
+/**
+ * Обнуление сохранённых значений координат
+ */
+export function resetCoords() {
+  coords = undefined;
 }
