@@ -1,0 +1,41 @@
+{
+  "cityStorage.js": {
+    "path": "src/js/cityStorage.js",
+    "s": {
+      "0": 2,
+      "1": 1,
+      "2": 2,
+      "3": 1
+    }
+  },
+
+  "fetchUrl.js": {
+    "path": "src/js/fetchUrl.js",
+    "s": {
+      "0": 2,
+      "1": 1,
+      "2": 2,
+      "3": 1
+    }
+  },
+
+  "geolocation.js": {
+    "path": "geolocation.js",
+    "s": {
+      "0": 2,
+      "1": 1,
+      "2": 2,
+      "3": 1
+    }
+  },
+
+  "mapsStaticApi.js": {
+    "path": "src/js/mapsStaticApi.js",
+    "s": {
+      "0": 2,
+      "1": 1,
+      "2": 2,
+      "3": 1
+    }
+  }
+}

@@ -19,6 +19,7 @@
     "@babel/preset-env": "^7.25.4",
     "@eslint/js": "^9.10.0",
     "babel-jest": "^29.7.0",
+    "check-code-coverage": "^1.10.5",
     "css-loader": "^7.1.2",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
