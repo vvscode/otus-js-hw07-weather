@@ -1,20 +1,38 @@
 name: PR Sanity Check
 
-on: pull_request
+on:
+  # https://stackoverflow.com/questions/58184822/github-actions-on-pull-request-and-master-branch
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   lint:
     runs-on: ubuntu-22.04
+    permissions:
+      checks: write
+      statuses: write
+      contents: write
+      pull-requests: write # 'write' access to pull requests
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.GITHUB_HEAD_REF }}
 
       - name: Install Packages
         run: |
           npm install
+
       - name: Lint check
         run: |
           npm run lint
+
       - name: Test check
         run: |
           npm run test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
