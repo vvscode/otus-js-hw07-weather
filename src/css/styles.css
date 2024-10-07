@@ -1,0 +1,35 @@
+.body {
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  margin: 30px;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 25em 10em 11em;
+  gap: 15px;
+}
+
+.weather-location {
+  justify-self: center;
+}
+
+.weather-info {
+  padding: 15px 5px;
+  resize: none;
+}
+
+.history-label {
+  text-decoration: underline;
+  justify-self: center;
+}
+
+.history-list li {
+  list-style: none;
+  line-height: 2em;
+}
+
+.history-list a {
+  text-decoration: none;
+}
